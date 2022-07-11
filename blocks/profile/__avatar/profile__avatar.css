@@ -1,0 +1,10 @@
+.profile__avatar{
+    padding-right: 30px;
+    max-height: 120px;
+    max-width: 120px;
+}
+@media (min-width: 320px) and (max-width: 670px) {
+    .profile__avatar {
+        padding-right: 0px;
+    }
+  }

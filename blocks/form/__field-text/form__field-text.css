@@ -1,0 +1,22 @@
+.form__field-text{
+    width: 358px;
+    height: 14px;
+    margin: 30px 0 0 0;
+    padding-bottom: 13px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    border: 0;
+    border-bottom: 1px solid #000000;
+
+}
+
+@media (min-width: 320px) and (max-width: 500px) {
+    .form__field-text {
+        width: 238px;
+    }
+  }
