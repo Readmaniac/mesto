@@ -1,10 +1,15 @@
-let popupProfile = document.querySelector('.popup');
-let profileOpen = document.querySelector('.profile__edit-button');
-let profileExit = document.querySelector('.form__close-icon');
-let setStatus = document.querySelector('.popup_opened');
-
+const popupProfile = document.querySelector('.popup');
+const profileOpen = document.querySelector('.profile__edit-button');
+const profileExit = document.querySelector('.form__close-icon');
+const setStatus = document.querySelector('.popup_opened');
+const nameInput = document.getElementById('field-name');
+const nameProfile = document.querySelector('.profile__title');
+const jobInput = document.getElementById('field-job');
+const jobProfile = document.querySelector('.profile__subtitle');
 
 function controlProfile(){
+    nameInput.value=nameProfile.textContent;
+    jobInput.value=jobProfile.textContent;
     popupProfile.classList.toggle('popup_opened');
 }
 profileOpen.addEventListener('click', controlProfile);
@@ -24,13 +29,15 @@ let saveProfile = document.querySelector('.form__save');
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
-    let nameInput = document.querySelector('.form__field-name');
-    let name = document.querySelector('.profile__title');
-    name.textContent = nameInput.value; 
-    let jobInput = document.querySelector('.form__field-text');
-    let job = document.querySelector('.profile__subtitle');
-    job.textContent = jobInput.value; 
+    nameProfile.textContent = nameInput.value; 
+    jobProfile.textContent = jobInput.value; 
     controlProfile();
 }
 saveProfile.addEventListener('click', formSubmitHandler);
 
+
+let likeButton = document.querySelector('.elements__like');
+function likeAdd(){
+    likeButton.classList.toggle('elements__like_active');
+}
+likeButton.addEventListener('click', likeAdd);
