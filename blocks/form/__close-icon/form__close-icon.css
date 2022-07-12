@@ -12,10 +12,12 @@
     right: -40px;
 }
 
-@media (min-width: 320px) and (max-width: 500px) {
+@media (min-width: 320px) and (max-width: 520px) {
     .form__close-icon {
         width: 20px;
         height: 20px;
+        top: -36px;
+        right: 0;
     }
 }
 .form__close-icon:hover{

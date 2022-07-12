@@ -1,8 +1,6 @@
 .profile__info{
     display: grid;
     max-width: 100%;
-    max-height: 73px;
-
     gap: 16px 18px;
 }
 @media (min-width: 320px) and (max-width: 670px) {

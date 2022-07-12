@@ -12,11 +12,9 @@
 
 @media (min-width: 320px) and (max-width: 500px) {
     .form__title {
-        margin: 25px 0 0 0;
+        margin: 25px 0 45px 0;
         width: 238px;
         height: 22px;
-        font-style: normal;
-        font-weight: 900;
         font-size: 18px;
         line-height: 22px;
         color: #000000;
