@@ -39,9 +39,14 @@ const pictureImage = document.querySelector(selectors.pictureImage);
 const pictureName = document.querySelector(selectors.pictureName);
 const pictureClose = document.getElementById(selectors.closePicture);
 
-function openPopups(popap){
+
+function openProfile(popap){
     nameInput.value=nameProfile.textContent;
     jobInput.value=jobProfile.textContent;
+    openPopups(popap);
+}
+
+function openPopups(popap){
     popap.classList.add('popup_opened');
 }
 
@@ -124,8 +129,7 @@ profileOpen.addEventListener('click', function(){
 profileExit.addEventListener('click', function(){
     closePopups(popupProfile)});
 
-profileSave.addEventListener('click', handleProfileFormSubmit);
-profileSave.addEventListener('submit', handleProfileFormSubmit);
+popupProfile.addEventListener('submit', handleProfileFormSubmit);
 
 cardAdd.addEventListener('click', function(){
     openPopups(cardProfile);
