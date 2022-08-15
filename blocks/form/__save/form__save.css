@@ -14,6 +14,14 @@
     text-align: center;
     
 }
+
+.form__save:disabled {
+    border: 1px solid black;
+    background-color: transparent;
+    color: black;
+    opacity: .2;
+  }
+
 .form__save:hover{
     opacity: 0.8;
     cursor:pointer;

@@ -1,8 +1,8 @@
-.form__field-text{
+.form__input{
     width: 358px;
     min-height: 14px;
     margin: 30px 0 0 0;
-    padding-bottom: 13px;
+    padding: 0 13px 0 0;
     font-family: "Inter", "Arial", sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -15,7 +15,7 @@
 }
 
 @media (min-width: 320px) and (max-width: 500px) {
-    .form__field-text {
+    .form__input {
         width: 238px;
     }
   }

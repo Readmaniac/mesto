@@ -7,10 +7,11 @@ const jobInput = document.getElementById('field-job');
 const jobProfile = document.querySelector('.profile__subtitle');
 const profileSave = document.querySelector('.form__save');
 
+
 const selectors = {
     formCard: 'popup-card',
-    inputMesto: 'field-mesto',
-    inputLink: 'link-mesto',
+    inputMesto: 'name',
+    inputLink: 'link',
     list: '.todos__list',
     addCard: '.profile__add-elements',
     template: '#element-template',
@@ -25,7 +26,8 @@ const selectors = {
     popupImage: 'image',
     pictureImage: '.picture__image',
     closePicture:'closedpicture',
-    pictureName:'.picture__name'
+    pictureName:'.picture__name',
+    submitFormPlace: '.form__save'
 }
 const cardProfile = document.getElementById(selectors.formCard);
 const list = document.querySelector(selectors.list);
@@ -39,6 +41,7 @@ const pictureImage = document.querySelector(selectors.pictureImage);
 const pictureName = document.querySelector(selectors.pictureName);
 const pictureClose = document.getElementById(selectors.closePicture);
 
+createInitialCards();
 
 function openProfile(popap){
     nameInput.value=nameProfile.textContent;
@@ -47,10 +50,12 @@ function openProfile(popap){
 }
 
 function openPopups(popap){
+    dataContainer.removeEventListener('click', openPopupPlace);
     popap.classList.add('popup_opened');
 }
 
 function closePopups(popap){
+    dataContainer.addEventListener('click', openPopupPlace);
     popap.classList.remove('popup_opened');
 }
 
@@ -112,20 +117,26 @@ function renderCards(data, container, position = 'prepend') {
     }
 }
 
-function createNewCard(){
+function createNewCard(name, link){
     cardProfile.addEventListener('submit', function (event) {
         event.preventDefault();
-        const inputCard = {
-            name: inputMesto.value,
-            link: inputLink.value
-        }
+        const inputCard = {name, link}
         renderCards(inputCard,list);
         closePopups(cardProfile);
     })
 }
 
+const places = initialCards;
+const createPlace = (name, link) => ({ name, link });
+const addPlace = (place) => { // побочные эффекты
+  places.unshift(place);
+  dataContainer.value = (JSON.stringify(places, null, 2));
+};
+
+
 profileOpen.addEventListener('click', function(){
     openPopups(popupProfile)});
+
 profileExit.addEventListener('click', function(){
     closePopups(popupProfile)});
 
@@ -143,5 +154,10 @@ pictureClose.addEventListener('click', function(){
     closePopups(picturePopap);
 })
 
-createNewCard();
-createInitialCards();
+const openPopupPlace = () => {
+  formPlace.reset();
+  formPlace.submit.setAttribute('disabled', 'disabled');
+  formPlace.name.focus();
+  openPopups(popupPlace);
+};
+
