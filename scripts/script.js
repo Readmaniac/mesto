@@ -40,6 +40,8 @@ const picturePopap = document.getElementById(selectors.popupImage);
 const pictureImage = document.querySelector(selectors.pictureImage);
 const pictureName = document.querySelector(selectors.pictureName);
 const pictureClose = document.getElementById(selectors.closePicture);
+const dataContainer = document.querySelector('.overlay');
+const formPlace = document.forms.place;
 
 createInitialCards();
 
@@ -161,3 +163,14 @@ const openPopupPlace = () => {
   openPopups(popupPlace);
 };
 
+const submitPlaceHandler = (e) => {
+    const name = e.target.name.value;
+    const link = e.target.link.value;
+    closePopups(popupPlace);
+    const place = createNewCard(name, link);
+  };
+  
+  formPlace.addEventListener('submit', submitPlaceHandler);
+  const popupPlace = document.querySelector('#popup-card');
+
+  

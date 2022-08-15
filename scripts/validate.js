@@ -11,24 +11,12 @@ const form = document.querySelector(formsConfig.formSelector);
 const formInput = form.querySelector(formsConfig.inputSelector);
 const formError = form.querySelector(`.form__item-error_field_${formInput.name}`);
 
-function enableValidation(){
-  const formList = Array.from(document.querySelectorAll('.form'));
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      console.log(formElement);
-      evt.preventDeafault();
-      setEventListeners(formElement);
-    });
-  });
+function enableValidation(formsConfig) {
+  const formList = Array.from(document.querySelectorAll(formsConfig.formSelector));
+  formList.forEach((formElement) => {formElement.addEventListener('input', (event) => setEventListeners(formElement))})
 }
-enableValidation(form, formInput, formError);
 
-const formPlace = document.forms.place;
-
-const buttonSubmitFormPlace = formPlace.querySelector('.form__save');
-const dataContainer = document.querySelector('.overlay');
-const popupPlace = document.querySelector('#popup-card');
-const focusHandler = ({ target }) => target.select();
+enableValidation(formsConfig);
 
 const toggleFormSubmit = (elementSubmit, { disable }) => {
   if (disable) {
@@ -50,15 +38,17 @@ const checkFormValidity = (elementsFields, elementSubmit) => {
 const setFieldError = (elementField, elementError, params) => {
 
   elementError.textContent = params.validationMessage;
-  if (params.valid) {
-    elementField.classList.remove(params.invalidFieldClass);
-  } else {
+  if (!params.valid) {
     elementField.classList.add(params.invalidFieldClass);
+  } else {
+    elementField.classList.remove(params.invalidFieldClass);
   }
 };
 
 const checkFieldValidity = (elementField, elementError, invalidFieldClass) => {
-  const { validationMessage, validity: { valid } } = elementField;
+
+  const validationMessage = elementField.validationMessage;
+  const valid = elementField.validity.valid;
   const params = {
     validationMessage,
     valid,
@@ -70,35 +60,23 @@ const checkFieldValidity = (elementField, elementError, invalidFieldClass) => {
 
 const setEventListeners = (formElement) => {
   const formFields = Array.from(formElement.querySelectorAll('.form__input'));
-  const buttonSubmitFormPlace = formElement.querySelector('.form__save');
+  const buttonSubmitForm = formElement.querySelector('.form__save');
   formFields.forEach((elementField) => {
     const errorTextContainerSelector = `.form__item-error_field_${elementField.name}`;
-    const elementError = formPlace.querySelector(errorTextContainerSelector);
+    const elementError = formElement.querySelector(errorTextContainerSelector);
 
     elementField.addEventListener('input', (e) => {
       const field = e.target;
-      checkFormValidity(formFields, buttonSubmitFormPlace);
+      checkFormValidity(formFields, buttonSubmitForm);
       checkFieldValidity(field, elementError, 'form__item-input_invalid');
     });
 });
 };
 
-
 const submitCommonHandler = (e) => {
   e.preventDefault();
-  const formIsValid = checkFormValidity(formFields, buttonSubmitFormPlace);
+  const formIsValid = checkFormValidity(formFields, buttonSubmitForm);
   if (!formIsValid) {
     e.stopImmediatePropagation();
   }
 }
-
-const submitPlaceHandler = (e) => {
-  const name = e.target.name.value;
-  const link = e.target.link.value;
-  closePopups(popupPlace);
-  const place = createNewCard(name, link);
-};
-
-formPlace.addEventListener('submit', submitPlaceHandler);
-
-//dataContainer.addEventListener('focus', openPopupPlace);
