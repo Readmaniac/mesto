@@ -42,7 +42,7 @@ const pictureName = document.querySelector(selectors.pictureName);
 const pictureClose = document.getElementById(selectors.closePicture);
 const dataContainer = document.querySelector('.overlay');
 const formPlace = document.forms.place;
-const overlay = document.querySelector('.overlay');
+
 
 createInitialCards();
 
@@ -183,12 +183,12 @@ const submitPlaceHandler = (e) => {
     }
   }
 
+const overlay = document.querySelectorAll('.overlay');
 
-
-/* overlay.forEach((item) => {item.addEventListener('mousedown', function closePopupOverlay(event){
+overlay.forEach((item) => {item.addEventListener('mousedown', function closePopupOverlay(event){
 const over = item.closest('.popup');
-  if(!event.target === event.currentTarget){
+  if(event.target === event.currentTarget){
     closePopups(over);
   }
 })
-}) */
+})
