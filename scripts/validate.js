@@ -62,7 +62,6 @@ const checkFormValidity = (elementsFields, elementSubmit) => {
 };
 
 const setFieldError = (elementField, elementError, params) => {
-  debugger;
   elementError.textContent = params.validationMessage;
   if (!elementField.valid) {
     elementField.classList.add(params.invalidFieldClass);
