@@ -18,6 +18,32 @@ function enableValidation(formsConfig) {
 
 enableValidation(formsConfig);
 
+const setEventListeners = (formElement) => {
+  const formFields = Array.from(formElement.querySelectorAll(formsConfig.inputSelector));
+  const buttonSubmitForm = formElement.querySelector(formsConfig.submitButtonSelector);
+  formFields.forEach((elementField) => {
+    const elementError = formElement.querySelector(`.form__item-error_field_${elementField.name}`);
+    elementField.addEventListener('input', (e) => {
+      const field = e.target;
+      checkFormValidity(formFields, buttonSubmitForm);
+      checkFieldValidity(field, elementError, 'form__item-input_invalid');
+    });
+});
+};
+
+const checkFieldValidity = (elementField, elementError, invalidFieldClass) => {
+
+  const validationMessage = elementField.validationMessage;
+  const valid = elementField.validity.valid;
+  const params = {
+    validationMessage,
+    valid,
+    invalidFieldClass,
+  };
+  setFieldError(elementField, elementError, params);
+  return valid;
+};
+
 const toggleFormSubmit = (elementSubmit, { disable }) => {
   if (disable) {
     elementSubmit.removeAttribute('disabled');
@@ -36,41 +62,13 @@ const checkFormValidity = (elementsFields, elementSubmit) => {
 };
 
 const setFieldError = (elementField, elementError, params) => {
-
+  debugger;
   elementError.textContent = params.validationMessage;
-  if (!params.valid) {
+  if (!elementField.valid) {
     elementField.classList.add(params.invalidFieldClass);
   } else {
     elementField.classList.remove(params.invalidFieldClass);
   }
-};
-
-const checkFieldValidity = (elementField, elementError, invalidFieldClass) => {
-
-  const validationMessage = elementField.validationMessage;
-  const valid = elementField.validity.valid;
-  const params = {
-    validationMessage,
-    valid,
-    invalidFieldClass,
-  };
-  setFieldError(elementField, elementError, params);
-  return valid;
-};
-
-const setEventListeners = (formElement) => {
-  const formFields = Array.from(formElement.querySelectorAll('.form__input'));
-  const buttonSubmitForm = formElement.querySelector('.form__save');
-  formFields.forEach((elementField) => {
-    const errorTextContainerSelector = `.form__item-error_field_${elementField.name}`;
-    const elementError = formElement.querySelector(errorTextContainerSelector);
-
-    elementField.addEventListener('input', (e) => {
-      const field = e.target;
-      checkFormValidity(formFields, buttonSubmitForm);
-      checkFieldValidity(field, elementError, 'form__item-input_invalid');
-    });
-});
 };
 
 const submitCommonHandler = (e) => {

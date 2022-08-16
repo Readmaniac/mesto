@@ -42,6 +42,7 @@ const pictureName = document.querySelector(selectors.pictureName);
 const pictureClose = document.getElementById(selectors.closePicture);
 const dataContainer = document.querySelector('.overlay');
 const formPlace = document.forms.place;
+const overlay = document.querySelector('.overlay');
 
 createInitialCards();
 
@@ -54,11 +55,14 @@ function openProfile(popap){
 function openPopups(popap){
     dataContainer.removeEventListener('click', openPopupPlace);
     popap.classList.add('popup_opened');
+    document.addEventListener('keydown', closeEscapeKey);
+    overlay.addEventListener('keydown', closeEscapeKey);
 }
 
 function closePopups(popap){
     dataContainer.addEventListener('click', openPopupPlace);
     popap.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closeEscapeKey);
 }
 
 function handleProfileFormSubmit (evt) {
@@ -173,4 +177,18 @@ const submitPlaceHandler = (e) => {
   formPlace.addEventListener('submit', submitPlaceHandler);
   const popupPlace = document.querySelector('#popup-card');
 
-  
+  function closeEscapeKey(evt){
+    if(evt.code === 'Escape'){
+      closePopups(document.querySelector('.popup_opened'));
+    }
+  }
+
+
+
+/* overlay.forEach((item) => {item.addEventListener('mousedown', function closePopupOverlay(event){
+const over = item.closest('.popup');
+  if(!event.target === event.currentTarget){
+    closePopups(over);
+  }
+})
+}) */
