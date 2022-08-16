@@ -7,29 +7,6 @@ const jobInput = document.getElementById('field-job');
 const jobProfile = document.querySelector('.profile__subtitle');
 const profileSave = document.querySelector('.form__save');
 
-function openProfile(popap){
-    nameInput.value=nameProfile.textContent;
-    jobInput.value=jobProfile.textContent;
-    openPopups(popap);
-}
-
-
-
-
-
-function closePopups(popap){
-    //dataContainer.addEventListener('click', openPopupPlace);
-    popap.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closeEscapeKey);
-}
-
-profileOpen.addEventListener('click', function(){
-    openProfile(popupProfile)});
-
-profileExit.addEventListener('click', function(){
-    closePopups(popupProfile)});
-
-
 const selectors = {
     formCard: 'popup-card',
     inputMesto: 'name',
@@ -65,11 +42,52 @@ const pictureClose = document.getElementById(selectors.closePicture);
 const formPlace = document.forms.place;
 const overlay = document.querySelector('.overlay');
 
-function createInitialCards(){
-    initialCards.forEach((item) => renderCards(item, list))
-    }
+const submitPlaceHandler = (e) => {
+    const name = e.target.name.value;
+    const link = e.target.link.value;
+    closePopups(popupPlace);
+    const place = createNewCard(name, link);
+  };
+  
+  formPlace.addEventListener('submit', submitPlaceHandler);
+  const popupPlace = document.querySelector('#popup-card');
 
-createInitialCards();
+  function closeEscapeKey(evt){
+    if(evt.code === 'Escape'){
+      closePopups(document.querySelector('.popup_opened'));
+    }
+  }
+
+const places = initialCards;
+const createPlace = (name, link) => ({ name, link });
+const addPlace = (place) => { // побочные эффекты
+  places.unshift(place);
+  dataContainer.value = (JSON.stringify(places, null, 2));
+};
+
+function openPopups(popap){
+    popap.classList.add('popup_opened');
+    document.addEventListener('keydown', closeEscapeKey);
+    popap.querySelector('.overlay').addEventListener('click', function(e) {
+        closePopupOverlay(e,popap)});
+}
+
+function openProfile(popap){
+    nameInput.value=nameProfile.textContent;
+    jobInput.value=jobProfile.textContent;
+    openPopups(popap);
+}
+
+function closePopups(popap){
+    //dataContainer.addEventListener('click', openPopupPlace);
+    popap.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closeEscapeKey);
+}
+
+function closePopupOverlay(event,popap){
+    if(event.target === event.currentTarget){
+    closePopups(popap);}
+}
 
 function createCard(title, link){
     const cardElement = template.cloneNode(true);
@@ -95,8 +113,6 @@ function createCard(title, link){
 
     return cardElement;
 }
-
-popupProfile.addEventListener('submit', handleProfileFormSubmit);
 
 function handleProfileFormSubmit (evt) {
     evt.preventDefault();
@@ -136,13 +152,9 @@ function createNewCard(name, link){
     })
 }
 
-const places = initialCards;
-const createPlace = (name, link) => ({ name, link });
-const addPlace = (place) => { // побочные эффекты
-  places.unshift(place);
-  dataContainer.value = (JSON.stringify(places, null, 2));
-};
-
+function createInitialCards(){
+    initialCards.forEach((item) => renderCards(item, list))
+    }
 
 function openProfile(popap){
     nameInput.value=nameProfile.textContent;
@@ -164,37 +176,17 @@ cardClose.addEventListener('click', function(){
     closePopups(cardProfile);
 });
 
+
 pictureClose.addEventListener('click', function(){
     closePopups(picturePopap);
 })
 
+profileOpen.addEventListener('click', function(){
+    openProfile(popupProfile)});
 
+profileExit.addEventListener('click', function(){
+    closePopups(popupProfile)});
 
-const submitPlaceHandler = (e) => {
-    const name = e.target.name.value;
-    const link = e.target.link.value;
-    closePopups(popupPlace);
-    const place = createNewCard(name, link);
-  };
-  
-  formPlace.addEventListener('submit', submitPlaceHandler);
-  const popupPlace = document.querySelector('#popup-card');
+popupProfile.addEventListener('submit', handleProfileFormSubmit);
 
-  function closeEscapeKey(evt){
-    if(evt.code === 'Escape'){
-      closePopups(document.querySelector('.popup_opened'));
-    }
-  }
-
-
-  function openPopups(popap){
-    popap.classList.add('popup_opened');
-    document.addEventListener('keydown', closeEscapeKey);
-    popap.querySelector('.overlay').addEventListener('click', function(e) {
-        closePopupOverlay(e,popap)});
-}
-
-function closePopupOverlay(event,popap){
-    if(event.target === event.currentTarget){
-    closePopups(popap);}
-}
+createInitialCards();
