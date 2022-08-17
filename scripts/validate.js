@@ -10,8 +10,10 @@ const configs = {
 const setEventListeners = (formElement, formsConfig) => {
   const formFields = Array.from(formElement.querySelectorAll(formsConfig.inputSelector));
   const buttonSubmitForm = formElement.querySelector(formsConfig.submitButtonSelector);
+  toggleFormSubmit(buttonSubmitForm, { disable: false });
   formFields.forEach((elementField) => {
     const elementError = formElement.querySelector(`.form__item-error_field_${elementField.name}`);
+    console.log(elementField)
     elementField.addEventListener('input', (e) => {
       const field = e.target;
       checkFormValidity(formFields, buttonSubmitForm);
@@ -27,7 +29,6 @@ const checkFieldValidity = (elementField, elementError, invalidFieldClass) => {
   } else {
     elementField.classList.remove(invalidFieldClass); 
   }
-  return valid;
 };
 
 const toggleFormSubmit = (elementSubmit, { disable }) => {
@@ -57,7 +58,8 @@ const submitCommonHandler = (e) => {
 
 function enableValidation(formsConfig) {
   const formList = Array.from(document.querySelectorAll(formsConfig.formSelector));
-  formList.forEach((formElement) => {setEventListeners(formElement, formsConfig)})
+  formList.forEach((formElement) => {setEventListeners(formElement, formsConfig)});
+  
 }
 
 enableValidation(configs);

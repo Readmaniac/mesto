@@ -11,7 +11,6 @@ const selectors = {
     formCard: 'popup-card',
     inputMesto: 'name',
     inputLink: 'link',
-    list: '.todos__list',
     addCard: '.profile__add-elements',
     template: '#element-template',
     container: '.elements__container',
@@ -42,14 +41,14 @@ const pictureClose = document.getElementById(selectors.closePicture);
 const formPlace = document.forms.place;
 const overlay = document.querySelector('.overlay');
 
-const submitPlaceHandler = (e) => {
+const handleSubmitPlace = (e) => {
     const name = e.target.name.value;
     const link = e.target.link.value;
     closePopups(popupPlace);
-    const place = createNewCard(name, link);
+    createNewCard(name, link);
   };
   
-  formPlace.addEventListener('submit', submitPlaceHandler);
+  formPlace.addEventListener('submit', handleSubmitPlace);
   const popupPlace = document.querySelector('#popup-card');
 
   function closeEscapeKey(evt){
@@ -60,16 +59,13 @@ const submitPlaceHandler = (e) => {
 
 const places = initialCards;
 const createPlace = (name, link) => ({ name, link });
-const addPlace = (place) => { // побочные эффекты
-  places.unshift(place);
-  dataContainer.value = (JSON.stringify(places, null, 2));
-};
 
-function openPopups(popap){
-    popap.classList.add('popup_opened');
+function openPopups(popup){
+    popup.classList.add('popup_opened');
+    toggleFormSubmit(popup.querySelector('.form__save'),{ disable: false });
     document.addEventListener('keydown', closeEscapeKey);
-    popap.querySelector('.overlay').addEventListener('click', function(e) {
-        closePopupOverlay(e,popap)});
+    popup.querySelector('.overlay').addEventListener('click', function(e) {
+        closePopupOverlay(e,popup)});
 }
 
 function openProfile(popap){
@@ -146,9 +142,7 @@ function renderCards(data, container, position = 'prepend') {
 function createNewCard(name, link){
     cardProfile.addEventListener('submit', function (event) {
         event.preventDefault();
-        const inputCard = {name, link}
-        renderCards(inputCard,list);
-        closePopups(cardProfile);
+        renderCards({name, link},list);
     })
 }
 
@@ -163,7 +157,7 @@ function openProfile(popap){
 }
 
 function openPopupPlace(cardProfile){
-    formPlace.name.value = "";
+    formPlace.name.value = ""; 
     formPlace.link.value = "";
     openPopups(cardProfile);
 };
