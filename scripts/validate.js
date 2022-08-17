@@ -13,7 +13,6 @@ const setEventListeners = (formElement, formsConfig) => {
   toggleFormSubmit(buttonSubmitForm, { disable: false });
   formFields.forEach((elementField) => {
     const elementError = formElement.querySelector(`.form__item-error_field_${elementField.name}`);
-    console.log(elementField)
     elementField.addEventListener('input', (e) => {
       const field = e.target;
       checkFormValidity(formFields, buttonSubmitForm);
