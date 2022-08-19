@@ -3,7 +3,7 @@ const configs = {
     inputSelector: '.form__input',
     submitButtonSelector: '.form__save',
     inputErrorClass: '.form__item-input_invalid',
-    errorClass: '.form__item-error'
+    errorClass: '.form__item-error_field_'
   }; 
 
 
@@ -12,7 +12,7 @@ const setEventListeners = (formElement, formsConfig) => {
   const buttonSubmitForm = formElement.querySelector(formsConfig.submitButtonSelector);
   toggleFormSubmit(buttonSubmitForm, { disable: false });
   formFields.forEach((elementField) => {
-    const elementError = formElement.querySelector(`.form__item-error_field_${elementField.name}`);
+    const elementError = formElement.querySelector(`${configs.errorClass}${elementField.name}`);
     elementField.addEventListener('input', (e) => {
       const field = e.target;
       checkFormValidity(formFields, buttonSubmitForm);

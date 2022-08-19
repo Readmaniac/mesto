@@ -89,7 +89,6 @@ function createCard(title, link){
 
 function openPopups(popup){
     popup.classList.add('popup_opened');
-    toggleFormSubmit(popup.querySelector('.form__save'),{ disable: false });
     document.addEventListener('keydown', closeEscapeKey);
     popup.querySelector('.overlay').addEventListener('click', function(e) {
         closePopupOverlay(e,popup)});
@@ -162,6 +161,7 @@ function openPopupPlace(cardProfile){
 };
 
 cardAdd.addEventListener('click', function(){
+    blockEnterData(cardProfile);
     openPopupPlace(cardProfile);
 });
 
@@ -179,8 +179,14 @@ profileOpen.addEventListener('click', function(){
 profileExit.addEventListener('click', function(){
     closePopups(popupProfile)});
 
+function blockEnterData(popup){
+    toggleFormSubmit(popup.querySelector('.form__save'),{ disable: false });
+}    
+
+
 popupProfile.addEventListener('submit', handleProfileFormSubmit);
 
 createInitialCards();
 
 formPlace.addEventListener('submit', handleSubmitPlace);
+

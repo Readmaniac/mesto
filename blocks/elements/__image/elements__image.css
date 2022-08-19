@@ -2,6 +2,8 @@
     width: 282px;
     height: 282px;
     z-index: 2;
-    cursor: pointer;
 }
 
+.elements__image:hover{
+    cursor: pointer;
+}

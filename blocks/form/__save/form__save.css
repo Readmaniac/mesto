@@ -20,6 +20,7 @@
     background-color: transparent;
     color: black;
     opacity: .2;
+    pointer-events:none;
   }
 
 .form__save:hover{
