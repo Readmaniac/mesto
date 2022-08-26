@@ -1,64 +1,50 @@
-const configs = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__save',
-    inputErrorClass: '.form__item-input_invalid',
-    errorClass: '.form__item-error_field_'
-  }; 
-
-
-const setEventListeners = (formElement, formsConfig) => {
-  const formFields = Array.from(formElement.querySelectorAll(formsConfig.inputSelector));
-  const buttonSubmitForm = formElement.querySelector(formsConfig.submitButtonSelector);
-  toggleFormSubmit(buttonSubmitForm, { disable: false });
-  formFields.forEach((elementField) => {
-    const elementError = formElement.querySelector(`${configs.errorClass}${elementField.name}`);
-    elementField.addEventListener('input', (e) => {
-      const field = e.target;
-      checkFormValidity(formFields, buttonSubmitForm);
-      checkFieldValidity(field, elementError,configs.inputErrorClass);
-    });
-});
-};
-
-const checkFieldValidity = (elementField, elementError, invalidFieldClass) => {
-  elementError.textContent = elementField.validationMessage;
-  if (!elementField.valid) {
-    elementField.classList.add(invalidFieldClass);
-  } else {
-    elementField.classList.remove(invalidFieldClass); 
+export class FormValidator {
+  constructor(formElement, formsConfig){
+    this._formsConfig = formsConfig;
+    this._formElement = formElement;
   }
-};
 
-const toggleFormSubmit = (elementSubmit, { disable }) => {
-  if (disable) {
-    elementSubmit.removeAttribute('disabled');
-  } else {
-    elementSubmit.setAttribute('disabled', 'disabled');
+  enableValidation() {
+    this._buttonSubmitForm = this._formElement.querySelector(this._formsConfig.submitButtonSelector);
+    this._toggleFormSubmit(this._buttonSubmitForm, { disable: false });
+    this._setEventListeners();
   }
-};
 
-const checkFormValidity = (elementsFields, elementSubmit) => {
-  toggleFormSubmit(elementSubmit, { disable: true });
-  const formIsValid = elementsFields.every(({ validity }) => validity.valid);
-  if (!formIsValid) {
-    toggleFormSubmit(elementSubmit, { disable: false });
-  }
-  return formIsValid;
-};
+  _setEventListeners = () => {
+    const formFields = Array.from(this._formElement.querySelectorAll(this._formsConfig.inputSelector));
+    formFields.forEach((elementField) => {
+      const elementError = this._formElement.querySelector(`${this._formsConfig.errorClass}${elementField.name}`);
+      elementField.addEventListener('input', (e) => {
+        const field = e.target;
+        this._checkFormValidity(formFields, this._buttonSubmitForm);
+        this._checkFieldValidity(field, elementError,this._formsConfig.inputErrorClass);
+      });
+  });
+  };
 
-const submitCommonHandler = (e) => {
-  e.preventDefault();
-  const formIsValid = checkFormValidity(formFields, buttonSubmitForm);
-  if (!formIsValid) {
-    e.stopImmediatePropagation();
-  }
+  _checkFormValidity = (elementsFields, elementSubmit) => {
+    this._toggleFormSubmit(elementSubmit, { disable: true });
+    const formIsValid = elementsFields.every(({ validity }) => validity.valid);
+    if (!formIsValid) {
+      this._toggleFormSubmit(elementSubmit, { disable: false });
+    }
+    return formIsValid;
+  };
+
+  _checkFieldValidity = (elementField, elementError, invalidFieldClass) => {
+    elementError.textContent = elementField.validationMessage;
+    if (!elementField.valid) {
+      elementField.classList.add(invalidFieldClass);
+    } else {
+      elementField.classList.remove(invalidFieldClass); 
+    }
+  };
+
+  _toggleFormSubmit = (elementSubmit, { disable }) => {
+    if (disable) {
+      elementSubmit.removeAttribute('disabled');
+    } else {
+      elementSubmit.setAttribute('disabled', 'disabled');
+    }
+  };
 }
-
-function enableValidation(formsConfig) {
-  const formList = Array.from(document.querySelectorAll(formsConfig.formSelector));
-  formList.forEach((formElement) => {setEventListeners(formElement, formsConfig)});
-  
-}
-
-enableValidation(configs);

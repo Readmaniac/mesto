@@ -1,3 +1,6 @@
+import {Card, initialCards} from "./card.js";
+import {FormValidator} from "./validate.js";
+
 const popupProfile = document.getElementById('popup-profile');
 const profileOpen = document.querySelector('.profile__edit-button');
 const profileExit = document.querySelector('.form__close-icon');
@@ -43,48 +46,27 @@ const overlay = document.querySelector('.overlay');
 const popupPlace = document.querySelector('#popup-card');
 const places = initialCards;
 
+
+const configs = {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__save',
+    inputErrorClass: '.form__item-input_invalid',
+    errorClass: '.form__item-error_field_'
+  }; 
+
 const handleSubmitPlace = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const link = e.target.link.value;
     closePopups(popupPlace);
-    renderCards({name, link},list);
+    renderNewCards({name, link},list);
 };
 
-function renderCards(data, container, position = 'prepend') {
-    const cards = createCard(data.name, data.link);
-    switch (position) {
-      case "append": return container.append(cards);
-      case "prepend": return container.prepend(cards);
-      case "before": return container.before(cards);
-      case "after": return container.after(cards);
-      default: return;
-    }
-}
-
-function createCard(title, link){
-    const cardElement = template.cloneNode(true);
-    const cardTitle = cardElement.querySelector(selectors.mestoTitle);
-    cardTitle.textContent = title;
-    const cardLink = cardElement.querySelector(selectors.mestoImage);
-    cardLink.src = link;
-    cardLink.alt = title;
-
-    const deleteCard = cardElement.querySelector(selectors.mestodelete);
-    deleteCard.addEventListener('click', function(){
-        cardElement.remove();
-    });
-
-    const likeButton = cardElement.querySelector(selectors.mestoLike);
-    likeButton.addEventListener('click', function(){
-        addLike(likeButton);
-    });
-
-    cardLink.addEventListener('click', function(){
-        openPicture(cardLink,cardTitle);
-    });
-
-    return cardElement;
+function renderNewCards(data, container) {
+    const card = new Card (data, selectors.template)
+    const cardElement = card.createNewCard();
+    container.prepend(cardElement);
 }
 
 function openPopups(popup){
@@ -117,14 +99,10 @@ function handleProfileFormSubmit (evt) {
     closePopups(popupProfile);
 }
 
-function addLike(like){
-    like.classList.toggle(selectors.activeLike);
-}
-
-function openPicture(picture,title){
-    pictureImage.src=picture.src;
-    pictureName.textContent=title.textContent;
-    pictureImage.alt=title.textContent;
+export function openPicture(picture,title){
+    pictureImage.src=picture;
+    pictureName.textContent=title;
+    pictureImage.alt=title;
     picturePopap.classList.add('popup_opened');
     picturePopap.querySelector('.overlay').addEventListener('click', function(e) {
         closePopupOverlay(e,picturePopap)});
@@ -145,14 +123,8 @@ function closeEscapeKey(evt){
 }
 
 function createInitialCards(){
-    initialCards.forEach((item) => renderCards(item, list))
+    initialCards.forEach((item) => renderNewCards(item, list))
     }
-
-function openProfile(popap){
-    nameInput.value=nameProfile.textContent;
-    jobInput.value=jobProfile.textContent;
-    openPopups(popap);
-}
 
 function openPopupPlace(cardProfile){
     formPlace.name.value = ""; 
@@ -160,8 +132,19 @@ function openPopupPlace(cardProfile){
     openPopups(cardProfile);
 };
 
+function enableValidation(formsConfig) {
+    const formList = Array.from(document.querySelectorAll(formsConfig.formSelector));
+    formList.forEach((formElement) => {
+      const validator = new FormValidator(formElement, formsConfig);
+      
+      validator.enableValidation();
+    });
+  }
+  
+  enableValidation(configs);
+
 cardAdd.addEventListener('click', function(){
-    blockEnterData(cardProfile);
+    formPlace.querySelector(selectors.submitFormPlace).setAttribute('disabled', 'disabled');
     openPopupPlace(cardProfile);
 });
 
@@ -179,14 +162,8 @@ profileOpen.addEventListener('click', function(){
 profileExit.addEventListener('click', function(){
     closePopups(popupProfile)});
 
-function blockEnterData(popup){
-    toggleFormSubmit(popup.querySelector('.form__save'),{ disable: false });
-}    
-
-
 popupProfile.addEventListener('submit', handleProfileFormSubmit);
 
 createInitialCards();
 
 formPlace.addEventListener('submit', handleSubmitPlace);
-
