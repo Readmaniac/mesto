@@ -1,4 +1,4 @@
-import {openPicture} from "./script.js";
+import {openPicture} from "./index.js";
 
 export const initialCards = [
     {
