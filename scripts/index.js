@@ -32,8 +32,6 @@ const selectors = {
 }
 const cardProfile = document.getElementById(selectors.formCard);
 const list = document.querySelector(selectors.list);
-const inputMesto = document.getElementById(selectors.inputMesto);
-const inputLink =  document.getElementById(selectors.inputLink);
 const cardAdd = document.querySelector(selectors.addCard);
 const template = document.querySelector(selectors.template).content.querySelector(selectors.container);
 const cardClose = document.getElementById(selectors.addCardFormClose);
@@ -44,8 +42,6 @@ const pictureClose = document.getElementById(selectors.closePicture);
 const formPlace = document.forms.place;
 const overlay = document.querySelector('.overlay');
 const popupPlace = document.querySelector('#popup-card');
-const places = initialCards;
-
 
 const configs = {
     formSelector: '.form',
@@ -109,13 +105,6 @@ export function openPicture(picture,title){
     document.addEventListener('keydown', closeEscapeKey);
 }
 
-function openPicturePopup(popup){
-    popup.classList.add('popup_opened');
-    popup.addEventListener('keydown', closeEscapeKey);
-    popup.querySelector('.overlay').addEventListener('click', function(e) {
-        closePopupOverlay(e,popup)});
-}
-
 function closeEscapeKey(evt){
     if(evt.code === 'Escape'){
       closePopups(document.querySelector('.popup_opened'));
@@ -139,22 +128,19 @@ function enableValidation(formsConfig) {
       
       validator.enableValidation();
     });
-  }
-  
-  enableValidation(configs);
+}
+
+enableValidation(configs);
 
 cardAdd.addEventListener('click', function(){
     formPlace.querySelector(selectors.submitFormPlace).setAttribute('disabled', 'disabled');
-    openPopupPlace(cardProfile);
-});
+    openPopupPlace(cardProfile)});
 
 cardClose.addEventListener('click', function(){
-    closePopups(cardProfile);
-});
+    closePopups(cardProfile)});
 
 pictureClose.addEventListener('click', function(){
-    closePopups(picturePopap);
-})
+    closePopups(picturePopap)});
 
 profileOpen.addEventListener('click', function(){
     openProfile(popupProfile)});
