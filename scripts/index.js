@@ -1,5 +1,5 @@
-import {Card, initialCards} from "./card.js";
-import {FormValidator} from "./validate.js";
+import {Card, initialCards} from "./Card.js";
+import {FormValidator} from "./FormValidator.js";
 
 const popupProfile = document.getElementById('popup-profile');
 const profileOpen = document.querySelector('.profile__edit-button');
@@ -28,19 +28,16 @@ const selectors = {
     pictureImage: '.picture__image',
     closePicture:'closedpicture',
     pictureName:'.picture__name',
-    submitFormPlace: '.form__save'
+    submitForm: '.form__save'
 }
 const cardProfile = document.getElementById(selectors.formCard);
 const list = document.querySelector(selectors.list);
 const cardAdd = document.querySelector(selectors.addCard);
-const template = document.querySelector(selectors.template).content.querySelector(selectors.container);
-const cardClose = document.getElementById(selectors.addCardFormClose);
 const picturePopap = document.getElementById(selectors.popupImage);
 const pictureImage = document.querySelector(selectors.pictureImage);
 const pictureName = document.querySelector(selectors.pictureName);
 const pictureClose = document.getElementById(selectors.closePicture);
 const formPlace = document.forms.place;
-const overlay = document.querySelector('.overlay');
 const popupPlace = document.querySelector('#popup-card');
 
 const configs = {
@@ -48,8 +45,9 @@ const configs = {
     inputSelector: '.form__input',
     submitButtonSelector: '.form__save',
     inputErrorClass: '.form__item-input_invalid',
-    errorClass: '.form__item-error_field_'
-  }; 
+    errorClass: '.form__item-error_field_',
+    submitForm: '.form__save'
+}; 
 
 const handleSubmitPlace = (e) => {
     e.preventDefault();
@@ -59,8 +57,11 @@ const handleSubmitPlace = (e) => {
     renderNewCards({name, link},list);
 };
 
+const formValidators = {};
+const popups = document.querySelectorAll('.popup');
+
 function renderNewCards(data, container) {
-    const card = new Card (data, selectors.template)
+    const card = new Card (data, selectors.template,handleCardClick)
     const cardElement = card.createNewCard();
     container.prepend(cardElement);
 }
@@ -68,8 +69,6 @@ function renderNewCards(data, container) {
 function openPopups(popup){
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closeEscapeKey);
-    popup.querySelector('.overlay').addEventListener('click', function(e) {
-        closePopupOverlay(e,popup)});
 }
 
 function openProfile(popap){
@@ -83,11 +82,6 @@ function closePopups(popap){
     document.removeEventListener('keydown', closeEscapeKey);
 }
 
-function closePopupOverlay(event,popap){
-    if(event.target === event.currentTarget){
-    closePopups(popap);}
-}
-
 function handleProfileFormSubmit (evt) {
     evt.preventDefault();
     nameProfile.textContent = nameInput.value; 
@@ -95,13 +89,11 @@ function handleProfileFormSubmit (evt) {
     closePopups(popupProfile);
 }
 
-export function openPicture(picture,title){
+function handleCardClick(picture,title){
     pictureImage.src=picture;
     pictureName.textContent=title;
     pictureImage.alt=title;
     picturePopap.classList.add('popup_opened');
-    picturePopap.querySelector('.overlay').addEventListener('click', function(e) {
-        closePopupOverlay(e,picturePopap)});
     document.addEventListener('keydown', closeEscapeKey);
 }
 
@@ -126,6 +118,9 @@ function enableValidation(formsConfig) {
     formList.forEach((formElement) => {
       const validator = new FormValidator(formElement, formsConfig);
       
+      const formName = formElement.getAttribute('name')
+      formValidators[formName] = validator;
+      
       validator.enableValidation();
     });
 }
@@ -133,23 +128,25 @@ function enableValidation(formsConfig) {
 enableValidation(configs);
 
 cardAdd.addEventListener('click', function(){
-    formPlace.querySelector(selectors.submitFormPlace).setAttribute('disabled', 'disabled');
+    formValidators['place'].resetValidation()
     openPopupPlace(cardProfile)});
-
-cardClose.addEventListener('click', function(){
-    closePopups(cardProfile)});
-
-pictureClose.addEventListener('click', function(){
-    closePopups(picturePopap)});
 
 profileOpen.addEventListener('click', function(){
     openProfile(popupProfile)});
-
-profileExit.addEventListener('click', function(){
-    closePopups(popupProfile)});
 
 popupProfile.addEventListener('submit', handleProfileFormSubmit);
 
 createInitialCards();
 
 formPlace.addEventListener('submit', handleSubmitPlace);
+
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('overlay')) {
+            closePopups(popup)
+        }
+        if (evt.target.classList.contains('form__close-icon')) {
+            closePopups(popup)
+        }
+    })
+});

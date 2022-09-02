@@ -1,5 +1,3 @@
-import {openPicture} from "./index.js";
-
 export const initialCards = [
     {
     name: 'Архыз',
@@ -28,10 +26,12 @@ export const initialCards = [
 ]; 
 
 export class Card{
-    constructor(data, template){
+    constructor(data, template, handleCardClick){
       this._template = template;
       this._name = data.name;
       this._link = data.link;
+      this._handleCardClick = handleCardClick;
+      
     }
   
     createNewCard(){
@@ -62,18 +62,19 @@ export class Card{
     }
 
     _setsEventListeners(){
+        this._elementsLike = this._cardElement.querySelector('.elements__like');
         this._deleteCardButton.addEventListener('click', () => {
             this._deleteCard()});
 
         this._cardLink.addEventListener('click', () => {
-            openPicture(this._link,this._name)});
+            this._handleCardClick(this._link, this._name)});
 
-        this._cardElement.querySelector('.elements__like').addEventListener('click', () => {
+        this._elementsLike.addEventListener('click', () => {
             this._addLike()});
     }
 
     _addLike(){
-        this._cardElement.querySelector('.elements__like').classList.toggle('elements__like_active');
+        this._elementsLike.classList.toggle('elements__like_active');
     }
 }
 
