@@ -3,7 +3,7 @@ import {FormValidator} from "./FormValidator.js";
 
 const popupProfile = document.getElementById('popup-profile');
 const profileOpen = document.querySelector('.profile__edit-button');
-const profileExit = document.querySelector('.form__close-icon');
+const profileExit = document.querySelector('.popup__close-icon');
 const nameInput = document.getElementById('field-name');
 const nameProfile = document.querySelector('.profile__title');
 const jobInput = document.getElementById('field-job');
@@ -145,7 +145,7 @@ popups.forEach((popup) => {
         if (evt.target.classList.contains('overlay')) {
             closePopups(popup)
         }
-        if (evt.target.classList.contains('form__close-icon')) {
+        if (evt.target.classList.contains('popup__close-icon')) {
             closePopups(popup)
         }
     })
