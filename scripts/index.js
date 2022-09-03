@@ -94,7 +94,6 @@ function handleCardClick(picture,title){
     pictureName.textContent=title;
     pictureImage.alt=title;
     openPopups(picturePopap);
-    document.addEventListener('keydown', closeEscapeKey);
 }
 
 function closeEscapeKey(evt){
