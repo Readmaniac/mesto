@@ -5,7 +5,7 @@ export class UserInfo{
     }
 
     getUserInfo(){
-        return {name: this._nameField.textContent, job: this._jobField.textContent}
+        return {name: this._nameField.textContent, link: this._jobField.textContent}
     }
 
     setUserInfo({name, link}){

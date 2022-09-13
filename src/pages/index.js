@@ -2,11 +2,9 @@ import './index.css';
 import {Card, initialCards} from "../components/Card.js";
 import {FormValidator} from "../components/FormValidator.js";
 import {Section} from "../components/Section.js";
-import {Popup} from "../components/Popup.js";
 import {PopupWithImage} from "../components/PopupWithImage.js";
 import {PopupWithForm} from "../components/PopupWithForm.js";
 import {UserInfo} from "../components/UserInfo.js";
-
 import avatarImage from '../images/Avatar.svg';
 import blackheartImage from '../images/blackheart.svg';
 import closeIconImage from '../images/Close_Icon.svg';
@@ -22,67 +20,14 @@ import likeActiveImage from '../images/Like_active.svg';
 import logoImage from '../images/logo.svg';
 import trashImage from '../images/Trash.svg';
 import vectorImage from '../images/Vector.svg';
+import {profileOpen,
+        selectors,
+        configs,
+        cardAdd,
+        formValidators} from "../utils/constants.js";
 
-const images = [
-    { name: 'Avatar', image: avatarImage },
-    { name: 'blackheart', link: blackheartImage },
-    { name: 'Close_Icon', link: closeIconImage },
-    { name: 'cross', link: crossImage },
-    { name: 'Element-1', link: elementFirst },
-    { name: 'Element-2', link: elementSecond },
-    { name: 'Element-3', link: elementThird },
-    { name: 'Element-4', link: elementForth },
-    { name: 'Element-5', link: elementFifth },
-    { name: 'Element', link: elementImage },
-    { name: 'Like_active', link: likeActiveImage },
-    { name: 'logo', link: logoImage },
-    { name: 'Trash', link: trashImage },
-    { name: 'Vector', link: vectorImage }
-]; 
-
-const selectors = {
-    formCard: '.popup-card',
-    popupProfile: '.popup-profile',
-    inputMesto: 'name',
-    inputLink: 'link',
-    addCard: '.profile__add-elements',
-    template: '#element-template',
-    container: '.elements__container',
-    list: '.elements',
-    mestoTitle: '.elements__name',
-    mestoImage: '.elements__image',
-    mestodelete: '.elements__delete',
-    mestoLike: '.elements__like',
-    activeLike: 'elements__like_active',
-    addCardFormClose: 'closecards',
-    popupImage: '.picture',
-    pictureImage: '.picture__image',
-    closePicture:'closedpicture',
-    pictureName:'.picture__name',
-    submitForm: '.form__save',
-    profileName: '.profile__title',
-    profileJob: '.profile__subtitle'
-}
-
-const profileOpen = document.querySelector('.profile__edit-button');
-const nameInput = document.getElementById('field-name');
-const jobInput = document.getElementById('field-job');
-const cardAdd = document.querySelector(selectors.addCard);
-
-const configs = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__save',
-    inputErrorClass: '.form__item-input_invalid',
-    errorClass: '.form__item-error_field_',
-    submitForm: '.form__save'
-}; 
-
-const formValidators = {};
 const imagePopup = new PopupWithImage(selectors.popupImage);
-const placePopup = new Popup(selectors.formCard);
-const profilePopup = new Popup(selectors.popupProfile);
-
+imagePopup.setEventListeners();
 const cardSection = new Section(selectors.list, (cardItem) => {
     cardSection.addItem(renderNewCards(cardItem))
   });
@@ -93,21 +38,20 @@ const profileUserInfo = new UserInfo(selectors.profileName, selectors.profileJob
 
 const profilePopupWithForm = new PopupWithForm(selectors.popupProfile, handleProfileFormSubmit);
 profilePopupWithForm.setEventListeners();
+
 const placePopupWithForm = new PopupWithForm(selectors.formCard, handleSubmitPlace);
 placePopupWithForm.setEventListeners();
 
 function renderNewCards(data) {
     const card = new Card (data, selectors.template, () =>{
         imagePopup.open(data.name, data.link);
-        imagePopup.setEventListeners();
     });
     return card.createNewCard();
 }
 
 function handleProfileFormSubmit (data) {
-    profileUserInfo.getUserInfo()
     profileUserInfo.setUserInfo(data);
-    profilePopup.close();
+    profilePopupWithForm.close();
 };
 
 function handleSubmitPlace (data) {
@@ -117,16 +61,14 @@ function handleSubmitPlace (data) {
 
 profileOpen.addEventListener('click', () => {
     const infoFromPage = profileUserInfo.getUserInfo();
-    nameInput.value=infoFromPage.name;
-    jobInput.value=infoFromPage.job;
-    profilePopup.setEventListeners();
-    profilePopup.open();
+    profilePopupWithForm.setInputValues(infoFromPage);
+    profilePopupWithForm.open();
+    formValidators['profile'].resetValidation();
 });
 
 cardAdd.addEventListener('click', () => {
     formValidators['place'].resetValidation();
-    placePopup.setEventListeners();
-    placePopup.open();
+    placePopupWithForm.open();
 });
 
 function enableValidation(formsConfig) {
