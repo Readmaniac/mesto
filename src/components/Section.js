@@ -8,9 +8,7 @@ export class Section {
         this._container.prepend(cardElement)
     }
 
-    renderItems(cardList){
-        cardList.forEach( card => {
-            this._renderer(card)
-        });
+    renderItem(card){
+        this._renderer(card)
     }
 }

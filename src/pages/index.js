@@ -29,10 +29,12 @@ import {profileOpen,
 const imagePopup = new PopupWithImage(selectors.popupImage);
 imagePopup.setEventListeners();
 const cardSection = new Section(selectors.list, (cardItem) => {
-    cardSection.addItem(renderNewCards(cardItem))
-  });
+    cardSection.addItem(renderNewCard(cardItem))
+});
 
-cardSection.renderItems(initialCards);
+initialCards.forEach( card => {
+    cardSection.renderItem(card)
+});
 
 const profileUserInfo = new UserInfo(selectors.profileName, selectors.profileJob);
 
@@ -42,7 +44,7 @@ profilePopupWithForm.setEventListeners();
 const placePopupWithForm = new PopupWithForm(selectors.formCard, handleSubmitPlace);
 placePopupWithForm.setEventListeners();
 
-function renderNewCards(data) {
+function renderNewCard(data) {
     const card = new Card (data, selectors.template, () =>{
         imagePopup.open(data.name, data.link);
     });
@@ -56,7 +58,7 @@ function handleProfileFormSubmit (data) {
 
 function handleSubmitPlace (data) {
     placePopupWithForm.close();
-    cardSection.addItem(renderNewCards(data));
+    cardSection.renderItem(data);
 };
 
 profileOpen.addEventListener('click', () => {
@@ -74,10 +76,10 @@ cardAdd.addEventListener('click', () => {
 function enableValidation(formsConfig) {
     const formList = Array.from(document.querySelectorAll(formsConfig.formSelector));
     formList.forEach((formElement) => {
-      const validator = new FormValidator(formElement, formsConfig);
-      const formName = formElement.getAttribute('name')
-      formValidators[formName] = validator;
-      validator.enableValidation();
+        const validator = new FormValidator(formElement, formsConfig);
+        const formName = formElement.getAttribute('name')
+        formValidators[formName] = validator;
+        validator.enableValidation();
     });
 }
 
