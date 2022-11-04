@@ -3,6 +3,8 @@ export const profileOpen = document.querySelector('.profile__edit-button');
 export const selectors = {
     formCard: '.popup-card',
     popupProfile: '.popup-profile',
+    popupDeleteCard: '.popup__delete-card',
+    popupAvatar: '.popup-avatar',
     inputMesto: 'name',
     inputLink: 'link',
     addCard: '.profile__add-elements',
@@ -13,7 +15,7 @@ export const selectors = {
     mestoImage: '.elements__image',
     mestodelete: '.elements__delete',
     mestoLike: '.elements__like',
-    activeLike: 'elements__like_active',
+    activeLike: 'elements__likes_active',
     addCardFormClose: 'closecards',
     popupImage: '.picture',
     pictureImage: '.picture__image',
@@ -21,9 +23,11 @@ export const selectors = {
     pictureName:'.picture__name',
     submitForm: '.form__save',
     profileName: '.profile__title',
-    profileJob: '.profile__subtitle'
+    profileJob: '.profile__subtitle',
+    profileAvatar: ".profile__avatar"
 }
 export const cardAdd = document.querySelector(selectors.addCard);
+export const profileAvatar = document.querySelector(selectors.profileAvatar);
 export const configs = {
     formSelector: '.form',
     inputSelector: '.form__input',
@@ -33,4 +37,6 @@ export const configs = {
     submitForm: '.form__save'
 }; 
 
+export const popupDeleteCard = document.querySelector(selectors.popupDeleteCard);
 export const formValidators = {};
+

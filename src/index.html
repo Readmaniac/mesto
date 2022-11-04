@@ -24,6 +24,23 @@
       <section class="elements">
         
       </section>
+
+      <div class="popup popup-avatar">
+        <div class="overlay"></div>
+        <form class="form" name="avatar">
+          <button type="button" class="popup__close-icon"></button>
+          <h2 class="form__title">Обновить аватар</h2>
+          <input 
+          type="url" 
+          placeholder="Ссылка на картинку" 
+          class="form__input"
+          name="link"
+          required>
+          <span class="form__item-error form__item-error_field_link" ></span>
+          <button class="form__save" type="submit" disabled>Сохранить</button>
+        </form>
+      </div>
+
       <div class="popup popup-profile" id="popup-profile">
         <div class="overlay"></div>
         <form class="form" name="profile">
@@ -85,14 +102,27 @@
           disabled>Создать</button>
         </form>
       </div>
-        <div class="picture popup" id="image">
-          <div class="overlay picture__overlay"></div> 
-          <div class="picture__container">
-            <button type="button" class="popup__close-icon" id="closedpicture"></button>
-            <img src="#" alt="" class="picture__image">
-            <p class="picture__name">Название</p>
-          </div>
+      <div class="picture popup" id="image">
+        <div class="overlay picture__overlay"></div> 
+        <div class="picture__container">
+          <button type="button" class="popup__close-icon" id="closedpicture"></button>
+          <img src="#" alt="" class="picture__image">
+          <p class="picture__name">Название</p>
+        </div>
       </div>
+
+      <div class="popup popup__delete-card">
+        <div class="overlay"></div> 
+        <div class="popup__delete-card_container">
+          <button type="button" class="popup__close-icon"></button>
+          <h2 class="popup__delete-card_title">Вы уверены?</h2>
+          <form name="delete-form" action="#" class="popup__form" novalidate>
+            <button class="popup__delete-card_btn-confirm" type="button">Да</button>
+          </form>
+          <!-- <button type="button" class="popup__delete-card_btn-confirm">Да</button> -->
+        </div>
+      </div>
+
     </main>
     <footer class="footer">
       <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
@@ -103,7 +133,10 @@
         <button class="elements__delete" type="button"></button>
         <div class="elements__content">
           <p class="elements__name" aria-placeholder="Название"></p>
-          <button class="elements__like" type="button"></button>
+          <div class="elements__likes">
+            <button class="elements__likes-btn" type="button"></button>
+            <span class="elements__likes-number">1</span>
+          </div>
         </div>
       </div>
     </template>
