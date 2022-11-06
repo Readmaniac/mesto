@@ -47,7 +47,8 @@ Promise.all([api.getAllCards(), api.getUsersInfo()])
   .then(([allCards, userData]) => {
     userId = userData._id;
     profileUserInfo.setUserInfo(userData);
-    allCards.slice(0,9).forEach((card) => {
+    allCards.forEach((card) => {
+    //allCards.slice(0,9).forEach((card) => {
         cardSection.renderItem(card)
     })
   })
@@ -115,6 +116,7 @@ const profileUserInfo = new UserInfo(selectors.profileName, selectors.profileJob
 const deleteCardPopup = new PopupWithSubmit(selectors.popupDeleteCard);
 deleteCardPopup.setEventListeners();
 
+//Функционал создания новой карточки
 function renderNewCard(data) {
     const card = new Card ({
       data, 
@@ -140,6 +142,7 @@ function renderNewCard(data) {
       handleSetLike: (cardId) =>{
         api.setLike(cardId)
           .then((data) => {
+            console.log(data);
             card.handleLikeCard(data)
           })
           .catch((err) => {
