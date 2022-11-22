@@ -3,7 +3,7 @@ export class Card{
         this._data = data;
         this._cardId = data._id;
         this._userId = userId;
-        //this._cardOwnerId = data.owner._id;
+        this._cardOwnerId = data.owner._id;
         this._template = template;
         this._name = data.name;
         this._link = data.link;
@@ -28,9 +28,9 @@ export class Card{
         this._cardImage.alt = this._name;
         this._deleteCardButton = this._cardElement.querySelector('.elements__delete');
         this._isCardLiked();
+        this._setDeleteBtn()
         this._likesNumber.textContent = this._likes.length;
         this._setsEventListeners();
-        
 
         return this._cardElement;
     }
@@ -56,24 +56,21 @@ export class Card{
         });
 
         this._cardImage.addEventListener('click', () => {
-            console.log(this);
             this._handleCardClick(this._name, this._link)});
 
         this._elementsLike.addEventListener('click', () => {
-            if (this._elementsLike.classList.contains('elements__like_active')){
-                this._handleSetLike(this._cardId)
-            } else {
+            if (this._elementsLike.classList.contains('elements__likes_active')){
                 this._handleRemoveLike(this._cardId);
+            } else {
+                this._handleSetLike(this._cardId)
             }
         });
     }
 
     handleLikeCard(data){
-        this._elementsLike.classList.toggle('elements__like_active');
-        console.log(this._elementsLike.classList);
+        this._elementsLike.classList.toggle('elements__likes_active');
         this._likes = data.likes;
         this._likesNumber.textContent = this._likes.length;
-        console.log(this._likes.length);
     }
 
     _isCardLiked() {
@@ -87,5 +84,11 @@ export class Card{
     getId(){
         return this._data._id;
     }
+
+    _setDeleteBtn() {
+        if (this._userId !== this._cardOwnerId) {
+          this._deleteCardButton.remove();
+        }
+      }
 }
 

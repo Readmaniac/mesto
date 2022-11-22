@@ -32,10 +32,10 @@ import {profileOpen,
 
 /*---API---*/
 const config = {
-  url: 'https://nomoreparties.co/v1/cohort-51',
+  url: 'https://nomoreparties.co/v1/cohort-54',
   headers: {
     'Content-Type': 'application/json',
-      authorization: '0b524fe0-ba0b-48ec-97a9-90bd5fb80134'
+      authorization: '7ad4b367-9863-4a09-9138-d86794effb54'
   }
 }
 
@@ -60,6 +60,7 @@ Promise.all([api.getAllCards(), api.getUsersInfo()])
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: selectors.popupProfile,
   handleFormSubmit: (dataForm) => {
+    profilePopupWithForm.loading(true);
     api.editUserInfo(dataForm)
       .then((dataForm) => {
         profileUserInfo.setUserInfo(dataForm);
@@ -68,6 +69,9 @@ const profilePopupWithForm = new PopupWithForm({
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
+      .finally(() => {
+        profilePopupWithForm.loading(false);
+      });
   }
 });
 
@@ -77,15 +81,18 @@ profilePopupWithForm.setEventListeners();
 const avatarPopup = new PopupWithForm({
   popupSelector: selectors.popupAvatar,
   handleFormSubmit: (data) => {
+    avatarPopup.loading(true);
     api.editUserAvatar(data)
       .then((data) => {
-        console.log(profileAvatar);
         profileAvatar.src = data.avatar;
         avatarPopup.close();
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
       })
+      .finally(() => {
+        profilePopupWithForm.loading(false);
+      });
   }
 });
 avatarPopup.setEventListeners();
@@ -94,12 +101,20 @@ avatarPopup.setEventListeners();
 const placePopupWithForm = new PopupWithForm({
   popupSelector: selectors.formCard, 
   handleFormSubmit: (data) => {
+    placePopupWithForm.loading(true);
     api.addCard(data)
     .then((data) =>{
+      
       placePopupWithForm.close();
       cardSection.renderItem(data);
-    }
-)}
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    })
+    .finally(() => {
+      profilePopupWithForm.loading(false);
+    });
+  }
 });
 
 placePopupWithForm.setEventListeners();
@@ -142,7 +157,6 @@ function renderNewCard(data) {
       handleSetLike: (cardId) =>{
         api.setLike(cardId)
           .then((data) => {
-            console.log(data);
             card.handleLikeCard(data)
           })
           .catch((err) => {

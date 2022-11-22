@@ -24,10 +24,11 @@ export const selectors = {
     submitForm: '.form__save',
     profileName: '.profile__title',
     profileJob: '.profile__subtitle',
-    profileAvatar: ".profile__avatar"
+    profileAvatar: '.profile__avatar',
+    profileAvatarBtn: '.profile__avatar_btn'
 }
 export const cardAdd = document.querySelector(selectors.addCard);
-export const profileAvatar = document.querySelector(selectors.profileAvatar);
+export const profileAvatar = document.querySelector(selectors.profileAvatarBtn);
 export const configs = {
     formSelector: '.form',
     inputSelector: '.form__input',

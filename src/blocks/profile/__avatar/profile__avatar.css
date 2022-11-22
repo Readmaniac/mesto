@@ -6,9 +6,15 @@
     align-items: center;
     justify-content: center;
     object-fit: cover;
+    position: relative;
 }
+
 @media (min-width: 320px) and (max-width: 670px) {
     .profile__avatar {
         padding-right: 0px;
     }
   }
+
+  .profile__avatar:hover .profile__avatar_hover{
+    visibility:visible;
+}
