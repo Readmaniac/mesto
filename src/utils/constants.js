@@ -3,7 +3,7 @@ export const profileOpen = document.querySelector('.profile__edit-button');
 export const selectors = {
     formCard: '.popup-card',
     popupProfile: '.popup-profile',
-    popupDeleteCard: '.popup__delete-card',
+    popupDeleteCard: '.delete-card',
     popupAvatar: '.popup-avatar',
     inputMesto: 'name',
     inputLink: 'link',
@@ -25,7 +25,8 @@ export const selectors = {
     profileName: '.profile__title',
     profileJob: '.profile__subtitle',
     profileAvatar: '.profile__avatar',
-    profileAvatarBtn: '.profile__btn'
+    profileAvatarBtn: '.profile__btn',
+    loading: 'Сохранение...'
 }
 export const cardAdd = document.querySelector(selectors.addCard);
 export const profileAvatar = document.querySelector(selectors.profileAvatarBtn);

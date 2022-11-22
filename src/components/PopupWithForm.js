@@ -35,12 +35,12 @@ export class PopupWithForm extends Popup{
         this._inputList.forEach((input) => {
           input.value = data[input.name];
         });
-      }
-      loading(isLoading) {
-        if (isLoading) {
-            this._btnSubmit.textContent = 'Сохранение...'
+    }
+
+    toggleSubmitButtonText(isLoading) {
+        if (this._btnSubmitText!==isLoading) {
+            this._btnSubmit.textContent = 'Сохранение...';
         } else {
-            console.log(this._btnSubmitText);
             this._btnSubmit.textContent = this._btnSubmitText;
         }
     }

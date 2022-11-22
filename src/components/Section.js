@@ -4,8 +4,8 @@ export class Section {
         this._renderer = renderer;
     }
 
-    addItem(cardElement){
-        this._container.append(cardElement)
+    addItem(element){
+        this._container.prepend(element)
     }
 
     renderItem(card){

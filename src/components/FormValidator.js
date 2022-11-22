@@ -8,12 +8,12 @@ export class FormValidator {
   }
 
   enableValidation() {
-    this._toggleFormSubmit(this._buttonSubmitForm, { disable: false });
+    this._toggleSubmitButton({ disable: false });
     this._setEventListeners();
   }
 
   resetValidation(){
-    this._toggleFormSubmit(this._buttonSubmitForm, { disable: false });
+    this._toggleSubmitButton({ disable: false });
     this._inputList.forEach((inputElement) => {
       this._hideError(inputElement);
     });
@@ -21,12 +21,12 @@ export class FormValidator {
 
   _setEventListeners = () => {    
     this._formFields.forEach((elementField) => {
-      elementField.addEventListener('input', (e) => {
-        const field = e.target;
-        this._checkFormValidity(this._formFields, this._buttonSubmitForm);
+      elementField.addEventListener('input', () => {
+        const field = elementField;
+        this._checkFormValidity();
         this._checkFieldValidity(field, this._findFieldError(elementField),this._formsConfig.inputErrorClass);
       });
-  });
+    });
   };
 
   _findFieldError(elementField){
@@ -34,12 +34,9 @@ export class FormValidator {
     return errorField;
   }
 
-  _checkFormValidity = (elementsFields, elementSubmit) => {
-    this._toggleFormSubmit(elementSubmit, { disable: true });
-    const formIsValid = elementsFields.every(({ validity }) => validity.valid);
-    if (!formIsValid) {
-      this._toggleFormSubmit(elementSubmit, { disable: false });
-    }
+  _checkFormValidity = () => {
+    this._toggleSubmitButton({ disable: !formIsValid });
+    const formIsValid = this._formFields.every(({ validity }) => validity.valid);
     return formIsValid;
   };
 
@@ -52,11 +49,11 @@ export class FormValidator {
     }
   };
 
-  _toggleFormSubmit = (elementSubmit, { disable }) => {
+  _toggleSubmitButton = ({ disable }) => {
     if (disable) {
-      elementSubmit.removeAttribute('disabled');
+      this._buttonSubmitForm.disabled = false;
     } else {
-      elementSubmit.setAttribute('disabled', 'disabled');
+      this._buttonSubmitForm.disabled = true;
     }
   };
 

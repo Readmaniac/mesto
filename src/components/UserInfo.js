@@ -18,4 +18,8 @@ export class UserInfo{
         this._jobField.textContent = data.about;
         this._avatarField.src = data.avatar;
     }
+
+    setAvatar(data){
+        this._avatarField.src = data.avatar;
+    }
 }
