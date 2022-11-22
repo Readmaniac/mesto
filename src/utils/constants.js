@@ -25,7 +25,7 @@ export const selectors = {
     profileName: '.profile__title',
     profileJob: '.profile__subtitle',
     profileAvatar: '.profile__avatar',
-    profileAvatarBtn: '.profile__avatar_btn'
+    profileAvatarBtn: '.profile__btn'
 }
 export const cardAdd = document.querySelector(selectors.addCard);
 export const profileAvatar = document.querySelector(selectors.profileAvatarBtn);
