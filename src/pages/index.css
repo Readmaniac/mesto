@@ -45,10 +45,11 @@
 @import url(../blocks/form/__input/__input-error/form__item-error_field_name.css);
 @import url(../blocks/form/__input/__input-error/form__item-error_field_link.css);
 
-@import url(../blocks//popup/__delete-card/__delete-card.css);
-@import url(../blocks//popup/__delete-card/_container/popup__delete-card_container.css);
-@import url(../blocks//popup/__delete-card/_title/popup__delete-card_title.css);
-@import url(../blocks//popup/__delete-card/_btn-confirm/popup__delete-card_btn-confirm.css);
+@import url(../blocks/delete-card/delete-card.css);
+@import url(../blocks/delete-card/__container/popup__delete-card_container.css);
+@import url(../blocks/delete-card/__title/popup__delete-card_title.css);
+@import url(../blocks/delete-card/__btn-confirm/delete-card__btn-confirm.css);
+
 @import url(../blocks/popup/_opened/popup_opened.css);
 
 
