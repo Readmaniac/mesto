@@ -8,15 +8,15 @@ import {PopupWithSubmit} from "../components/PopupWithSubmit.js";
 import {UserInfo} from "../components/UserInfo.js";
 import {Api} from "../components/Api";
 
-import {profileOpen,
-        selectors,
-        configs,
-        cardAdd,
-        profileAvatar,
-        formValidators,
-        popupDeleteCard,
-        waitText,
-        saveText} from "../utils/constants.js";
+import {
+  profileOpen,
+  selectors,
+  configs,
+  cardAdd,
+  profileAvatar,
+  formValidators,
+  buttonTextStatus
+} from "../utils/constants.js";
 
 /*---API---*/
 const apiConfig = {
@@ -35,7 +35,7 @@ Promise.all([api.getAllCards(), api.getUsersInfo()])
   .then(([allCards, userData]) => {
     userId = userData._id;
     profileUserInfo.setUserInfo(userData);
-    allCards.forEach((card) => {
+    allCards.reverse().forEach((card) => {
     //allCards.slice(0,9).forEach((card) => {
         cardSection.renderItem(card)
     })
@@ -48,7 +48,7 @@ Promise.all([api.getAllCards(), api.getUsersInfo()])
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: selectors.popupProfile,
   handleFormSubmit: (dataForm) => {
-    profilePopupWithForm.toggleSubmitButtonText(waitText);
+    profilePopupWithForm.toggleSubmitButtonText(buttonTextStatus.process);
     api.editUserInfo(dataForm)
       .then((dataForm) => {
         profileUserInfo.setUserInfo(dataForm);
@@ -58,7 +58,7 @@ const profilePopupWithForm = new PopupWithForm({
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        profilePopupWithForm.toggleSubmitButtonText(saveText);
+        profilePopupWithForm.toggleSubmitButtonText(buttonTextStatus.save);
       });
   }
 });
@@ -69,7 +69,7 @@ profilePopupWithForm.setEventListeners();
 const avatarPopup = new PopupWithForm({
   popupSelector: selectors.popupAvatar,
   handleFormSubmit: (data) => {
-    avatarPopup.toggleSubmitButtonText(waitText);
+    avatarPopup.toggleSubmitButtonText(buttonTextStatus.process);
     api.editUserAvatar(data)
       .then((data) => {
         profileUserInfo.setAvatar(data);
@@ -79,7 +79,7 @@ const avatarPopup = new PopupWithForm({
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        profilePopupWithForm.toggleSubmitButtonText(saveText);
+        avatarPopup.toggleSubmitButtonText(buttonTextStatus.save);
       });
   }
 });
@@ -89,7 +89,7 @@ avatarPopup.setEventListeners();
 const placePopupWithForm = new PopupWithForm({
   popupSelector: selectors.formCard, 
   handleFormSubmit: (data) => {
-    placePopupWithForm.toggleSubmitButtonText(waitText);
+    placePopupWithForm.toggleSubmitButtonText(buttonTextStatus.process);
     api.addCard(data)
     .then((data) =>{
       placePopupWithForm.close();
@@ -99,7 +99,7 @@ const placePopupWithForm = new PopupWithForm({
       console.log(`Ошибка: ${err}`);
     })
     .finally(() => {
-      profilePopupWithForm.toggleSubmitButtonText(saveText);
+      placePopupWithForm.toggleSubmitButtonText(buttonTextStatus.create);
     });
   }
 });
@@ -164,21 +164,21 @@ function renderNewCard(data) {
       }
     });
 
-return card.createNewCard();
+  return card.createNewCard();
 }
 
 function openPopupProfile(){
-    const infoFromPage = profileUserInfo.getUserInfo();
-    profilePopupWithForm.setInputValues(infoFromPage);
-    profilePopupWithForm.open();
-    formValidators['profile'].resetValidation();
+  const infoFromPage = profileUserInfo.getUserInfo();
+  profilePopupWithForm.setInputValues(infoFromPage);
+  profilePopupWithForm.open();
+  formValidators['profile'].resetValidation();
 }
 
 profileOpen.addEventListener('click', openPopupProfile);
 
 cardAdd.addEventListener('click', () => {
-    formValidators['place'].resetValidation();
-    placePopupWithForm.open();
+  formValidators['place'].resetValidation();
+  placePopupWithForm.open();
 });
 
 profileAvatar.addEventListener('click', () => {
@@ -187,13 +187,13 @@ profileAvatar.addEventListener('click', () => {
 });
 
 function enableValidation(formsConfig) {
-    const formList = Array.from(document.querySelectorAll(formsConfig.formSelector));
-    formList.forEach((formElement) => {
-        const validator = new FormValidator(formElement, formsConfig);
-        const formName = formElement.getAttribute('name')
-        formValidators[formName] = validator;
-        validator.enableValidation();
-    });
+  const formList = Array.from(document.querySelectorAll(formsConfig.formSelector));
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, formsConfig);
+    const formName = formElement.getAttribute('name')
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
 }
 
 enableValidation(configs);

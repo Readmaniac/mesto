@@ -38,8 +38,11 @@ export const configs = {
     submitForm: '.form__save'
 };
 
-export const waitText = 'Сохранение...';
-export const saveText = 'Сохранить';
+export const buttonTextStatus = {
+    save: 'Сохранить',
+    create: 'Создать',
+    process: 'Сохранение...'
+};
 
 export const popupDeleteCard = document.querySelector(selectors.popupDeleteCard);
 export const formValidators = {};

@@ -38,10 +38,6 @@ export class PopupWithForm extends Popup{
     }
 
     toggleSubmitButtonText(buttonText) {
-        if (this._btnSubmitText!==buttonText) {
-            this._btnSubmit.textContent = 'Сохранение...';
-        } else {
-            this._btnSubmit.textContent = 'Сохранить';
-        }
+            this._btnSubmit.textContent = buttonText;
     }
 }
