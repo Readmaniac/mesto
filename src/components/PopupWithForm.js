@@ -37,11 +37,11 @@ export class PopupWithForm extends Popup{
         });
     }
 
-    toggleSubmitButtonText(isLoading) {
-        if (this._btnSubmitText!==isLoading) {
+    toggleSubmitButtonText(buttonText) {
+        if (this._btnSubmitText!==buttonText) {
             this._btnSubmit.textContent = 'Сохранение...';
         } else {
-            this._btnSubmit.textContent = this._btnSubmitText;
+            this._btnSubmit.textContent = 'Сохранить';
         }
     }
 }

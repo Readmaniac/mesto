@@ -14,7 +14,9 @@ import {profileOpen,
         cardAdd,
         profileAvatar,
         formValidators,
-        popupDeleteCard} from "../utils/constants.js";
+        popupDeleteCard,
+        waitText,
+        saveText} from "../utils/constants.js";
 
 /*---API---*/
 const apiConfig = {
@@ -46,7 +48,7 @@ Promise.all([api.getAllCards(), api.getUsersInfo()])
 const profilePopupWithForm = new PopupWithForm({
   popupSelector: selectors.popupProfile,
   handleFormSubmit: (dataForm) => {
-    profilePopupWithForm.toggleSubmitButtonText(selectors.loading);
+    profilePopupWithForm.toggleSubmitButtonText(waitText);
     api.editUserInfo(dataForm)
       .then((dataForm) => {
         profileUserInfo.setUserInfo(dataForm);
@@ -56,7 +58,7 @@ const profilePopupWithForm = new PopupWithForm({
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        profilePopupWithForm.toggleSubmitButtonText(false);
+        profilePopupWithForm.toggleSubmitButtonText(saveText);
       });
   }
 });
@@ -67,7 +69,7 @@ profilePopupWithForm.setEventListeners();
 const avatarPopup = new PopupWithForm({
   popupSelector: selectors.popupAvatar,
   handleFormSubmit: (data) => {
-    avatarPopup.toggleSubmitButtonText(selectors.loading);
+    avatarPopup.toggleSubmitButtonText(waitText);
     api.editUserAvatar(data)
       .then((data) => {
         profileUserInfo.setAvatar(data);
@@ -77,7 +79,7 @@ const avatarPopup = new PopupWithForm({
         console.log(`Ошибка: ${err}`);
       })
       .finally(() => {
-        profilePopupWithForm.toggleSubmitButtonText(false);
+        profilePopupWithForm.toggleSubmitButtonText(saveText);
       });
   }
 });
@@ -87,7 +89,7 @@ avatarPopup.setEventListeners();
 const placePopupWithForm = new PopupWithForm({
   popupSelector: selectors.formCard, 
   handleFormSubmit: (data) => {
-    placePopupWithForm.toggleSubmitButtonText(selectors.loading);
+    placePopupWithForm.toggleSubmitButtonText(waitText);
     api.addCard(data)
     .then((data) =>{
       placePopupWithForm.close();
@@ -97,7 +99,7 @@ const placePopupWithForm = new PopupWithForm({
       console.log(`Ошибка: ${err}`);
     })
     .finally(() => {
-      profilePopupWithForm.toggleSubmitButtonText(false);
+      profilePopupWithForm.toggleSubmitButtonText(saveText);
     });
   }
 });

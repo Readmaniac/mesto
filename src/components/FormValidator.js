@@ -35,8 +35,8 @@ export class FormValidator {
   }
 
   _checkFormValidity = () => {
-    this._toggleSubmitButton({ disable: !formIsValid });
     const formIsValid = this._formFields.every(({ validity }) => validity.valid);
+    this._toggleSubmitButton({ disable: formIsValid });
     return formIsValid;
   };
 
@@ -50,11 +50,7 @@ export class FormValidator {
   };
 
   _toggleSubmitButton = ({ disable }) => {
-    if (disable) {
-      this._buttonSubmitForm.disabled = false;
-    } else {
-      this._buttonSubmitForm.disabled = true;
-    }
+      this._buttonSubmitForm.disabled = !disable;
   };
 
   _hideError(inputElement){

@@ -25,8 +25,7 @@ export const selectors = {
     profileName: '.profile__title',
     profileJob: '.profile__subtitle',
     profileAvatar: '.profile__avatar',
-    profileAvatarBtn: '.profile__btn',
-    loading: 'Сохранение...'
+    profileAvatarBtn: '.profile__btn'
 }
 export const cardAdd = document.querySelector(selectors.addCard);
 export const profileAvatar = document.querySelector(selectors.profileAvatarBtn);
@@ -37,7 +36,10 @@ export const configs = {
     inputErrorClass: '.form__item-input_invalid',
     errorClass: '.form__item-error_field_',
     submitForm: '.form__save'
-}; 
+};
+
+export const waitText = 'Сохранение...';
+export const saveText = 'Сохранить';
 
 export const popupDeleteCard = document.querySelector(selectors.popupDeleteCard);
 export const formValidators = {};
