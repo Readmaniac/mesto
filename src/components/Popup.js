@@ -26,7 +26,7 @@ export class Popup{
         (evt.target.classList.contains('popup__close-icon'))
       ) {
         this.close()
-        }
+      }
     })
   }
 }

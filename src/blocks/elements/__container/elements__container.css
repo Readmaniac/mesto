@@ -1,8 +1,8 @@
 .elements__container{
-    max-width: 282px;
-    min-height: 362px;
-    background: #FFFFFF;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
+  max-width: 282px;
+  min-height: 362px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
 }

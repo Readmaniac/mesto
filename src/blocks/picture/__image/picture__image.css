@@ -1,10 +1,9 @@
 .picture__image{
-    max-width: 75vw;
-    max-height: 75vh;
-    z-index: 3;
+  max-width: 75vw;
+  max-height: 75vh;
+  z-index: 3;
 }
 
-
 .picture__image:hover{
-    cursor: pointer;
+  cursor: pointer;
 }
