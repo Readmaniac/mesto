@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/Readmaniac/mesto/issues"
   },
-  "homepage": "https://github.com/Readmaniac/mesto",
+  "homepage": "https://github.com/Readmaniac/mesto#readme",
   "description": "",
   "devDependencies": {
     "@babel/core": "^7.19.0",
@@ -35,6 +35,7 @@
     "webpack-dev-server": "^4.11.0"
   },
   "dependencies": {
-    "core-js": "^3.25.1"
+    "core-js": "^3.25.1",
+    "gh-pages": "^4.0.0"
   }
 }
