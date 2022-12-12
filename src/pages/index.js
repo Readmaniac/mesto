@@ -197,3 +197,5 @@ function enableValidation(formsConfig) {
 }
 
 enableValidation(configs);
+
+//https://Readmaniac.github.io/mesto 
