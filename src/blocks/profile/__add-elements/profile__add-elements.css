@@ -2,7 +2,7 @@
   width: 150px;
   height: 50px;
   outline: solid 2px;
-  background-image: url(../../../images/cross.svg);
+  background-image: url('../../../images/cross.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 22px 22px;

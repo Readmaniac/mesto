@@ -1,5 +1,5 @@
 .elements__likes-btn{
-  background: url(../../../../images/heart.svg);
+  background: url('../../../../images/heart.svg');
   width: 22px;
   height: 19px;
   border: 0;

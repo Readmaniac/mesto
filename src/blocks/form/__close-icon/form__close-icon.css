@@ -1,6 +1,6 @@
 .form__close-icon{
   background: none;
-  background-image: url(../../../images/Close_Icon.svg);
+  background-image: url('../../../images/Close_Icon.svg');
   background-size:contain;
   border: unset;
   padding: 0;
