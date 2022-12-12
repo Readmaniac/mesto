@@ -1,20 +1,25 @@
-.profile__avatar{
-  height: 120px;
+.profile__avatar {
+  margin-right: 30px;
   width: 120px;
-  border-radius: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 120px;
+  border-radius: 50%;
   object-fit: cover;
-  position: relative;
+  background-position: center;
 }
 
-@media (min-width: 320px) and (max-width: 670px) {
+@media screen and (max-width: 580px) {
   .profile__avatar {
-    padding-right: 0px;
+    width: 80px;
+    height: 80px;
   }
 }
 
-.profile__avatar:hover .profile__avatar_hover{
-  visibility:visible;
+@media screen and (max-width: 480px) {
+  .profile__avatar {
+    margin-right: 0;
+    margin-bottom: 26px;
+    align-self: center;
+    width: 120px;
+    height: 120px;
+  }
 }
