@@ -1,0 +1,38 @@
+.form__save{
+  width: 358px;
+  height: 50px;
+  margin: 48px 0 0 0;
+  background: #000000;
+  border: none;
+  border-radius: 2px;
+  color: white;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+}
+
+.form__save:disabled {
+  border: 1px solid black;
+  background-color: transparent;
+  color: black;
+  opacity: .2;
+  pointer-events:none;
+}
+
+.form__save:hover{
+  opacity: 0.8;
+  cursor:pointer;
+}
+
+@media (min-width: 320px) and (max-width: 500px) {
+  .form__save {
+    width: 238px;
+    height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 45px 0 0 0;
+  }
+}

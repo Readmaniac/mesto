@@ -1,0 +1,25 @@
+.profile__add-elements{
+  width: 150px;
+  height: 50px;
+  outline: solid 2px;
+  background-image: url(../../../images/cross.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 22px 22px;
+  border: 2px solid #FFFFFF;
+  border-radius: 2px;
+  background-color: #000000;
+}
+@media (min-width: 320px) and (max-width: 670px) {
+  .profile__add-elements {
+    margin-top: 36px;
+    width: 282px;
+    height: 50px;
+    background-size: 16px 16px;
+ }
+}
+
+.profile__add-elements:hover {
+  opacity: 0.6;
+  cursor:pointer;
+}
